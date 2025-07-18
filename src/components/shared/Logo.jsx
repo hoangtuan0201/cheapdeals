@@ -9,23 +9,14 @@ const Logo = ({ size = "large" }) => {
       textAlign: "center",
       position: "relative",
       zIndex: 2,
-      marginTop: isLarge ? "20px" : "20px",
-      marginBottom: isLarge ? "20px" : "20px",
+      marginTop: isLarge ? "10px" : "10px",
+      marginBottom: isLarge ? "10px" : "10px",
     },
     logoBackground: {
       position: "relative",
-      marginBottom: "20px",
+      marginBottom: "10px",
     },
-    logoBackgroundBefore: {
-      position: "absolute",
-      top: "-20px",
-      left: "-20px",
-      width: "84px",
-      height: "67px",
-      background: "rgba(0, 0, 0, 0.05)",
-      borderRadius: "16px",
-      zIndex: -1,
-    },
+   
     logoIcon: {
       width: "64px",
       height: "64px",

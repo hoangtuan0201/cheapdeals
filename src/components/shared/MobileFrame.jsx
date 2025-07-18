@@ -76,8 +76,8 @@ const MobileFrame = ({ children }) => {
       overflow: "hidden",
     },
     navigationBar: {
-      height: "48px",
-      background: "transparent",
+      height: "40px",
+      background: "black",
       display: "flex",
       justifyContent: "space-around",
       alignItems: "center",
@@ -86,19 +86,19 @@ const MobileFrame = ({ children }) => {
       zIndex: 10,
     },
     navIcon: {
-      width: "14px",
-      height: "14px",
-      color: "black",
+      width: "22px",
+      height: "22px",
+      color: "fff",
     },
     navHome: {
-      width: "12px",
-      height: "14px",
-      color: "black",
+      width: "18px",
+      height: "20px",
+      color: "fff",
     },
     navRecent: {
-      width: "16px",
-      height: "16px",
-      color: "black",
+      width: "20px",
+      height: "20px",
+      color: "fff",
     },
     // Responsive styles
     "@media (max-width: 480px)": {

@@ -6,6 +6,12 @@ import MobileFrame from "../../components/shared/MobileFrame";
 import Logo from "../../components/shared/Logo";
 import FormInput from "../../components/shared/FormInput";
 import Button from "../../components/shared/Button";
+import SocialLoginButton from "../../components/shared/SocialLoginButton";
+import {
+  GoogleIcon,
+  FacebookIcon,
+  WhatsAppIcon,
+} from "../../components/shared/SocialIcons";
 import { validateForm } from "../../utils/validation";
 
 const SignUpForm = () => {
@@ -83,6 +89,57 @@ const SignUpForm = () => {
 
   const handleContinueAsGuest = () => {
     navigate("/home");
+  };
+
+  const handleGoogleSignUp = async () => {
+    setLoading(true);
+    setLocalError("");
+
+    try {
+      // TODO: Implement Google sign up
+      console.log("Google sign up clicked");
+      // const result = await signupWithGoogle();
+      // if (result.success) {
+      //   navigate("/home");
+      // } else {
+      //   setLocalError(result.error || "Google sign up failed");
+      // }
+    } catch (err) {
+      setLocalError("An unexpected error occurred");
+      console.error("Google sign up error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFacebookSignUp = async () => {
+    setLoading(true);
+    setLocalError("");
+
+    try {
+      // TODO: Implement Facebook sign up
+      console.log("Facebook sign up clicked");
+    } catch (err) {
+      setLocalError("An unexpected error occurred");
+      console.error("Facebook sign up error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleWhatsAppSignUp = async () => {
+    setLoading(true);
+    setLocalError("");
+
+    try {
+      // TODO: Implement WhatsApp sign up
+      console.log("WhatsApp sign up clicked");
+    } catch (err) {
+      setLocalError("An unexpected error occurred");
+      console.error("WhatsApp sign up error:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -190,7 +247,39 @@ const SignUpForm = () => {
             showPasswordToggle={true}
             required
           />
-
+            <p
+          style={{
+            fontFamily: '"Poppins", sans-serif',
+            fontWeight: 400,
+            fontSize: "13px",
+            lineHeight: "1.5em",
+            color: "#000",
+            textAlign: "center",
+            margin: "5px 0",
+            opacity: 0.6,
+          }}
+        >
+          Already have an account?{" "}
+          <button
+            type="button"
+            onClick={handleSwitchToSignIn}
+            style={{
+              background: "none",
+              border: "none",
+              color: "#000",
+              fontFamily: '"Poppins", sans-serif',
+              fontWeight: 400,
+              fontSize: "13px",
+              lineHeight: "1.5em",
+              cursor: "pointer",
+              textDecoration: "underline",
+              padding: 0,
+              marginLeft: "4px",
+            }}
+          >
+            Sign In
+          </button>
+        </p>
           <Button
             type="submit"
             variant="primary"
@@ -199,6 +288,53 @@ const SignUpForm = () => {
           >
             {loading ? "Creating Account..." : "Create Account"}
           </Button>
+
+          {/* Or sign up with text */}
+          <p
+            style={{
+              fontFamily: '"Poppins", sans-serif',
+              fontWeight: 400,
+              fontSize: "13px",
+              color: "#000",
+              textAlign: "center",
+              opacity: 0.6,
+              margin: "10px",
+            }}
+          >
+            - Or sign up with -
+          </p>
+
+          {/* Social Login Buttons */}
+          <div
+            style={{
+              display: "flex",
+              gap: "12px",
+              justifyContent: "center",
+              margin: "0 0 20px 0",
+            }}
+          >
+            <SocialLoginButton
+              provider="google"
+              onClick={handleGoogleSignUp}
+              disabled={loading}
+              icon={<GoogleIcon size={18} />}
+              style={{ flex: 1, maxWidth: "80px" }}
+            />
+            <SocialLoginButton
+              provider="facebook"
+              onClick={handleFacebookSignUp}
+              disabled={loading}
+              icon={<FacebookIcon size={18} />}
+              style={{ flex: 1, maxWidth: "80px" }}
+            />
+            <SocialLoginButton
+              provider="whatsapp"
+              onClick={handleWhatsAppSignUp}
+              disabled={loading}
+              icon={<WhatsAppIcon size={18} />}
+              style={{ flex: 1, maxWidth: "80px" }}
+            />
+          </div>
 
           <Button
             type="button"
@@ -217,38 +353,7 @@ const SignUpForm = () => {
           </Button>
         </form>
 
-        <p
-          style={{
-            fontFamily: '"Padyakke Expanded One", sans-serif',
-            fontWeight: 400,
-            fontSize: "13px",
-            lineHeight: "1.44em",
-            color: "#000",
-            textAlign: "center",
-            margin: "15px 0",
-            opacity: 0.6,
-          }}
-        >
-          Already have an account{" "}
-          <button
-            onClick={handleSwitchToSignIn}
-            style={{
-              background: "none",
-              border: "none",
-              color: "#000",
-              fontFamily: '"Padyakke Expanded One", sans-serif',
-              fontWeight: 400,
-              fontSize: "13px",
-              lineHeight: "1.44em",
-              cursor: "pointer",
-              textDecoration: "underline",
-              padding: 0,
-              marginLeft: "4px",
-            }}
-          >
-            Sign In
-          </button>
-        </p>
+      
       </div>
     </MobileFrame>
   );

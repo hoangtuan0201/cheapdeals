@@ -5,6 +5,12 @@ import MobileFrame from "../../components/shared/MobileFrame";
 import Logo from "../../components/shared/Logo";
 import FormInput from "../../components/shared/FormInput";
 import Button from "../../components/shared/Button";
+import SocialLoginButton from "../../components/shared/SocialLoginButton";
+import {
+  GoogleIcon,
+  FacebookIcon,
+  WhatsAppIcon,
+} from "../../components/shared/SocialIcons";
 import { useAuth } from "../../contexts/AuthContext";
 import { validateEmail, validatePassword } from "../../utils/validation";
 
@@ -97,6 +103,36 @@ const SignInForm = () => {
 
   const handleContinueAsGuest = () => {
     navigate("/home");
+  };
+
+  const handleFacebookSignIn = async () => {
+    setLoading(true);
+    setLocalError("");
+
+    try {
+      // TODO: Implement Facebook sign in
+      console.log("Facebook sign in clicked");
+    } catch (err) {
+      setLocalError("An unexpected error occurred");
+      console.error("Facebook sign in error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleWhatsAppSignIn = async () => {
+    setLoading(true);
+    setLocalError("");
+
+    try {
+      // TODO: Implement WhatsApp sign in
+      console.log("WhatsApp sign in clicked");
+    } catch (err) {
+      setLocalError("An unexpected error occurred");
+      console.error("WhatsApp sign in error:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -267,63 +303,115 @@ const SignInForm = () => {
             {loading ? "Signing In..." : "Sign In"}
           </Button>
 
-          <Button
-            type="button"
-            variant="secondary"
-            className="btn-auth"
-            onClick={handleGoogleSignIn}
-            disabled={loading}
-            style={{ marginTop: "10px" }}
-          >
-            {loading ? "Signing In..." : "Sign In with Google"}
-          </Button>
-
-          <Button
-            type="button"
-            variant="secondary"
-            className="btn-auth"
-            onClick={handleContinueAsGuest}
-            disabled={loading}
+          {/* Or sign in with text */}
+          <p
             style={{
-              marginTop: "10px",
-              background: "rgba(255, 255, 255, 0.4)",
-              border: "0.5px solid rgba(217, 217, 217, 0.6)",
-              opacity: 0.8,
+              fontFamily: '"Poppins", sans-serif',
+              fontWeight: 400,
+              fontSize: "13px",
+              color: "#000",
+              textAlign: "center",
+              opacity: 0.6,
+              margin: "20px 0 15px 0",
             }}
           >
-            Continue as Guest
-          </Button>
+            - Or sign in with -
+          </p>
+
+          {/* Social Login Buttons */}
+          <div
+            style={{
+              display: "flex",
+              gap: "12px",
+              justifyContent: "center",
+              margin: "0 0 20px 0",
+            }}
+          >
+            <SocialLoginButton
+              provider="google"
+              onClick={handleGoogleSignIn}
+              disabled={loading}
+              icon={<GoogleIcon size={18} />}
+              style={{ flex: 1, maxWidth: "80px" }}
+            />
+            <SocialLoginButton
+              provider="facebook"
+              onClick={handleFacebookSignIn}
+              disabled={loading}
+              icon={<FacebookIcon size={18} />}
+              style={{ flex: 1, maxWidth: "80px" }}
+            />
+            <SocialLoginButton
+              provider="whatsapp"
+              onClick={handleWhatsAppSignIn}
+              disabled={loading}
+              icon={<WhatsAppIcon size={18} />}
+              style={{ flex: 1, maxWidth: "80px" }}
+            />
+          </div>
         </form>
 
+        {/* Continue as Guest Button */}
+        <Button
+          type="button"
+          variant="secondary"
+          className="btn-auth"
+          onClick={handleContinueAsGuest}
+          disabled={loading}
+          style={{
+            marginTop: "10px",
+            background: "rgba(255, 255, 255, 0.4)",
+            border: "0.5px solid rgba(217, 217, 217, 0.6)",
+            opacity: 0.8,
+            maxWidth: "320px",
+            width: "100%",
+          }}
+        >
+          Continue as Guest
+        </Button>
+
+        {/* Terms and Privacy */}
         <div
-          style={{ textAlign: "center", marginTop: "10px", padding: "0 20px" }}
+          style={{
+            textAlign: "center",
+            marginTop: "20px",
+            padding: "0 20px",
+            width: "100%",
+            maxWidth: "320px",
+          }}
         >
           <p
             style={{
               fontFamily: '"Poppins", sans-serif',
               fontWeight: 400,
-              fontSize: "13px",
-              lineHeight: "1.5em",
+              fontSize: "12px",
+              lineHeight: "1.4em",
               color: "#000",
-              margin: "0 0 5px 0",
+              margin: "0",
               opacity: 0.6,
+              textAlign: "center",
             }}
           >
-            By clicking on "Sign In" you agree to
-          </p>
-          <p
-            style={{
-              fontFamily: '"Poppins", sans-serif',
-              fontWeight: 400,
-              fontSize: "13px",
-              lineHeight: "1.5em",
-              color: "#000",
-              margin: 0,
-              textDecoration: "underline",
-              cursor: "pointer",
-            }}
-          >
-            Terms of Service | Privacy Policy
+            By clicking on "Sign In" you agree to{" "}
+            <span
+              style={{
+                textDecoration: "underline",
+                cursor: "pointer",
+                opacity: 0.8,
+              }}
+            >
+              Terms of Service
+            </span>
+            {" | "}
+            <span
+              style={{
+                textDecoration: "underline",
+                cursor: "pointer",
+                opacity: 0.8,
+              }}
+            >
+              Privacy Policy
+            </span>
           </p>
         </div>
       </div>
