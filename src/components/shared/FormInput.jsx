@@ -17,7 +17,7 @@ const FormInput = ({
 
   const styles = {
     formInputContainer: {
-      marginBottom: "25px",
+      marginBottom: "18px",
       width: "100%",
     },
     formLabel: {
