@@ -1,0 +1,60 @@
+/* Get Started Page Styles */
+.get-started-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.get-started-message {
+  margin-top: auto;
+  margin-bottom: 60px;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.tagline {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5em;
+  color: #000;
+  margin: 0;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  opacity: 0.5;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .get-started-container {
+    padding: 15px;
+  }
+  
+  .get-started-message {
+    margin-bottom: 50px;
+    padding: 0 15px;
+  }
+  
+  .tagline {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 375px) {
+  .get-started-container {
+    padding: 10px;
+  }
+  
+  .get-started-message {
+    margin-bottom: 40px;
+    padding: 0 10px;
+  }
+  
+  .tagline {
+    font-size: 14px;
+  }
+}
