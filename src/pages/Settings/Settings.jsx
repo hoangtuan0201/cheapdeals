@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   ArrowBack,
+  AccountCircle,
+  Notifications,
   CardGiftcard,
+  Language,
   Logout,
   HelpOutline,
   Policy,
@@ -117,12 +120,7 @@ const Settings = () => {
       marginRight: "15px",
       opacity: 0.5,
     },
-    customIcon: {
-      width: "21px",
-      height: "21px",
-      marginRight: "15px",
-      objectFit: "cover",
-    },
+
     menuText: {
       flex: 1,
       fontSize: "13px",
@@ -169,7 +167,6 @@ const Settings = () => {
     onClick,
     rightElement,
     isLanguage = false,
-    customIconSrc,
   }) => {
     const [isHovered, setIsHovered] = useState(false);
 
@@ -183,15 +180,7 @@ const Settings = () => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {customIconSrc ? (
-          <img
-            src={customIconSrc}
-            alt={text}
-            style={settingsStyles.customIcon}
-          />
-        ) : (
-          <div style={settingsStyles.menuIcon}>{icon}</div>
-        )}
+        <div style={settingsStyles.menuIcon}>{icon}</div>
         <span style={settingsStyles.menuText}>{text}</span>
         {isLanguage && <span style={settingsStyles.languageText}>English</span>}
         {rightElement || <ChevronRight style={settingsStyles.menuArrow} />}
@@ -234,13 +223,13 @@ const Settings = () => {
           <div style={settingsStyles.sectionTitle}>GENERAL</div>
 
           <MenuItem
-            customIconSrc="/images/settings/account-icon.png"
+            icon={<AccountCircle />}
             text="Account"
             onClick={() => console.log("Account clicked")}
           />
 
           <MenuItem
-            customIconSrc="/images/settings/notifications-icon.png"
+            icon={<Notifications />}
             text="Notifications"
             onClick={handleNotificationToggle}
             rightElement={
@@ -257,7 +246,7 @@ const Settings = () => {
           />
 
           <MenuItem
-            customIconSrc="/images/settings/language-icon.png"
+            icon={<Language />}
             text="Language:"
             onClick={() => console.log("Language clicked")}
             isLanguage={true}
