@@ -119,7 +119,6 @@ const Home = () => {
             style={{
               position: "relative",
               cursor: "pointer",
-              padding: "8px",
             }}
           >
             <ShoppingCart
@@ -146,7 +145,6 @@ const Home = () => {
           <div
             style={{
               cursor: "pointer",
-              padding: "8px",
             }}
           >
             <Settings
