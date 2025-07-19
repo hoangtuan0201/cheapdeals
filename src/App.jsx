@@ -10,6 +10,7 @@ import SignInForm from "./pages/SignIn/SignInForm";
 import SignUpForm from "./pages/SignUp/SignUpForm";
 import Home from "./pages/Home/Home";
 import Policy from "./pages/Policy/Policy";
+import Settings from "./pages/Settings/Settings";
 import "./App.css";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/signup" element={<SignUpForm />} />
             <Route path="/home" element={<Home />} />
             <Route path="/policy" element={<Policy />} />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
         </div>
       </Router>

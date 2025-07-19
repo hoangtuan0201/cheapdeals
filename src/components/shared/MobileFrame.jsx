@@ -26,7 +26,10 @@ const MobileFrame = ({ children }) => {
     mobileFrame: {
       width: "375px",
       height: "812px",
-      position: "relative",
+      backgroundImage: 'url("/background.png")',
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",      position: "relative",
       display: "flex",
       flexDirection: "column",
       margin: "0 auto",

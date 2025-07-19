@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { ShoppingCart, Search, Settings } from "@mui/icons-material";
+import { ShoppingCart, Search, Settings, Clear } from "@mui/icons-material";
 import MobileFrame from "../../components/shared/MobileFrame";
 import Button from "../../components/shared/Button";
 import PageLoader from "../../components/shared/PageLoader";
@@ -9,13 +10,17 @@ import ProductCard from "./components/ProductCard";
 import productsData from "../../data/products.json";
 
 const Home = () => {
+  const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState("phones");
+  const [activeCategory, setActiveCategory] = useState("all");
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [allProducts, setAllProducts] = useState([]);
 
-  // Simulate loading time for better UX
+  // Initialize all products and simulate loading time
   useEffect(() => {
+    setAllProducts(productsData.products);
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1500); // 1.5 seconds loading
@@ -23,13 +28,35 @@ const Home = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Filter products based on active category
+  // Filter products based on active category and search query
   useEffect(() => {
-    const filtered = productsData.products.filter(
-      (product) => product.category === activeCategory
-    );
+    let filtered = allProducts;
+
+    // Filter by category if no search query
+    if (!searchQuery.trim()) {
+      if (activeCategory === "all") {
+        filtered = allProducts; // Show all products
+      } else {
+        filtered = allProducts.filter(
+          (product) => product.category === activeCategory
+        );
+      }
+    } else {
+      // Search across all products regardless of category
+      filtered = allProducts.filter((product) => {
+        const searchTerm = searchQuery.toLowerCase().trim();
+        return (
+          product.name.toLowerCase().includes(searchTerm) ||
+          product.category.toLowerCase().includes(searchTerm) ||
+          (product.description &&
+            product.description.toLowerCase().includes(searchTerm)) ||
+          (product.brand && product.brand.toLowerCase().includes(searchTerm))
+        );
+      });
+    }
+
     setFilteredProducts(filtered);
-  }, [activeCategory]);
+  }, [activeCategory, searchQuery, allProducts]);
 
   const handleLogout = async () => {
     try {
@@ -52,6 +79,27 @@ const Home = () => {
     console.log("Cart clicked");
     // TODO: Navigate to cart page
   };
+
+  const handleSettingsClick = () => {
+    navigate("/settings");
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchClear = () => {
+    setSearchQuery("");
+  };
+
+  // Create categories with "All Products" tab
+  const categoriesWithAll = [
+    { id: "all", name: "ALL PRODUCTS", active: activeCategory === "all" },
+    ...productsData.categories.map((cat) => ({
+      ...cat,
+      active: activeCategory === cat.id,
+    })),
+  ];
 
   // Show loading screen
   if (isLoading) {
@@ -100,6 +148,8 @@ const Home = () => {
             />
             <input
               type="text"
+              value={searchQuery}
+              onChange={handleSearchChange}
               placeholder="e.g iphone 14, ipad pro, laptop"
               style={{
                 border: "none",
@@ -111,6 +161,16 @@ const Home = () => {
                 fontFamily: '"Poppins", sans-serif',
               }}
             />
+            {searchQuery && (
+              <Clear
+                onClick={handleSearchClear}
+                style={{
+                  color: "#999",
+                  fontSize: "18px",
+                  cursor: "pointer",
+                }}
+              />
+            )}
           </div>
 
           {/* Cart Icon */}
@@ -143,6 +203,7 @@ const Home = () => {
 
           {/* Settings Icon */}
           <div
+            onClick={handleSettingsClick}
             style={{
               cursor: "pointer",
             }}
@@ -160,11 +221,10 @@ const Home = () => {
         <div
           style={{
             padding: "0 20px",
-            marginBottom: "20px",
           }}
         >
           <CategoryTabs
-            categories={productsData.categories}
+            categories={categoriesWithAll}
             activeCategory={activeCategory}
             onCategoryChange={handleCategoryChange}
           />
@@ -190,6 +250,24 @@ const Home = () => {
             Featured Items
           </h2>
         </div>
+
+        {/* Search Results Header */}
+        {searchQuery.trim() && (
+          <div
+            style={{
+              padding: "10px 20px 0 20px",
+              fontSize: "14px",
+              color: "#666",
+              fontFamily: '"Poppins", sans-serif',
+            }}
+          >
+            {filteredProducts.length > 0
+              ? `Found ${filteredProducts.length} result${
+                  filteredProducts.length !== 1 ? "s" : ""
+                } for "${searchQuery}"`
+              : `No results for "${searchQuery}"`}
+          </div>
+        )}
 
         {/* Products Grid */}
         <div
@@ -228,48 +306,31 @@ const Home = () => {
                 fontSize: "14px",
               }}
             >
-              No products found in this category.
+              {searchQuery.trim() ? (
+                <>
+                  No products found for "{searchQuery}".
+                  <br />
+                  <span
+                    onClick={handleSearchClear}
+                    style={{
+                      color: "#007AFF",
+                      cursor: "pointer",
+                      textDecoration: "underline",
+                      marginTop: "10px",
+                      display: "inline-block",
+                    }}
+                  >
+                    Clear search to see all products
+                  </span>
+                </>
+              ) : (
+                "No products found in this category."
+              )}
             </div>
           )}
         </div>
 
-        {/* User Info Footer (if signed in) */}
-        {currentUser && (
-          <div
-            style={{
-              padding: "10px 20px",
-              background: "#F8F8F8",
-              borderTop: "1px solid #E0E0E0",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <span
-              style={{
-                fontFamily: '"Poppins", sans-serif',
-                fontSize: "12px",
-                color: "#666",
-              }}
-            >
-              {currentUser.displayName || currentUser.email}
-            </span>
-            <Button
-              onClick={handleLogout}
-              variant="secondary"
-              style={{
-                fontSize: "10px",
-                padding: "4px 8px",
-                background: "#FFFFFF",
-                border: "1px solid #E0E0E0",
-                color: "#666",
-              }}
-            >
-              Sign Out
-            </Button>
-          </div>
-        )}
-      </div>
+             </div>
     </MobileFrame>
   );
 };

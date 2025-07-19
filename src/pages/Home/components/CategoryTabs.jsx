@@ -8,7 +8,17 @@ const CategoryTabs = ({
 }) => {
   const [hoveredTab, setHoveredTab] = useState(null);
 
+  // Separate ALL PRODUCTS from other categories
+  const allProductsTab = categories.find((cat) => cat.id === "all");
+  const regularCategories = categories.filter((cat) => cat.id !== "all");
+
   const containerStyles = {
+    width: "100%",
+    marginBottom: "15px",
+    ...style,
+  };
+
+  const regularTabsStyles = {
     width: "100%",
     height: "40px",
     background: "#E5E5E5",
@@ -19,7 +29,35 @@ const CategoryTabs = ({
     justifyContent: "space-around",
     padding: "0 5px",
     margin: "0 auto",
-    ...style,
+  };
+
+  const allProductsStyles = {
+    textAlign: "center",
+    marginTop: "10px",
+  };
+
+  const getAllProductsTabStyles = () => {
+    const isActive = activeCategory === "all";
+    const isHovered = hoveredTab === "all";
+
+    return {
+      fontFamily: '"Poppins", sans-serif',
+      fontSize: "12px",
+      fontWeight: isActive ? 600 : 400,
+      color: isActive ? "#007AFF" : "#666666",
+      cursor: "pointer",
+      textDecoration: isActive ? "underline" : "none",
+      textUnderlineOffset: "4px",
+      transition: "all 0.3s ease",
+      padding: "5px 10px",
+      display: "inline-block",
+      ...(isHovered &&
+        !isActive && {
+          color: "#007AFF",
+          textDecoration: "underline",
+          textUnderlineOffset: "4px",
+        }),
+    };
   };
 
   const getTabStyles = (category, index) => {
@@ -79,17 +117,34 @@ const CategoryTabs = ({
 
   return (
     <div style={containerStyles}>
-      {categories.map((category, index) => (
-        <div
-          key={category.id}
-          style={getTabStyles(category, index)}
-          onClick={() => handleTabClick(category)}
-          onMouseEnter={() => handleMouseEnter(category.id)}
-          onMouseLeave={handleMouseLeave}
-        >
-          {category.name}
+      {/* Regular Category Tabs */}
+      <div style={regularTabsStyles}>
+        {regularCategories.map((category, index) => (
+          <div
+            key={category.id}
+            style={getTabStyles(category, index)}
+            onClick={() => handleTabClick(category)}
+            onMouseEnter={() => handleMouseEnter(category.id)}
+            onMouseLeave={handleMouseLeave}
+          >
+            {category.name}
+          </div>
+        ))}
+      </div>
+
+      {/* ALL PRODUCTS Tab */}
+      {allProductsTab && (
+        <div style={allProductsStyles}>
+          <span
+            style={getAllProductsTabStyles()}
+            onClick={() => handleTabClick(allProductsTab)}
+            onMouseEnter={() => handleMouseEnter("all")}
+            onMouseLeave={handleMouseLeave}
+          >
+            {allProductsTab.name}
+          </span>
         </div>
-      ))}
+      )}
     </div>
   );
 };
