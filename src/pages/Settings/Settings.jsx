@@ -12,6 +12,8 @@ import {
   Policy,
   Email,
   ChevronRight,
+  Warning,
+  Close,
 } from "@mui/icons-material";
 import MobileFrame from "../../components/shared/MobileFrame";
 
@@ -19,6 +21,7 @@ const Settings = () => {
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   const handleBack = () => {
     navigate("/home");
@@ -34,7 +37,28 @@ const Settings = () => {
   };
 
   const handleNotificationToggle = () => {
+    if (!currentUser) {
+      setShowLoginPopup(true);
+      return;
+    }
     setNotificationsEnabled(!notificationsEnabled);
+  };
+
+  const handleProtectedAction = (action) => {
+    if (!currentUser) {
+      setShowLoginPopup(true);
+      return;
+    }
+    action();
+  };
+
+  const handleClosePopup = () => {
+    setShowLoginPopup(false);
+  };
+
+  const handleLoginRedirect = () => {
+    setShowLoginPopup(false);
+    navigate("/signin");
   };
 
   const settingsStyles = {
@@ -161,6 +185,109 @@ const Settings = () => {
     },
   };
 
+  const popupStyles = {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: "rgba(0, 0, 0, 0.5)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 1000,
+    },
+    popup: {
+      background: "#FFFFFF",
+      borderRadius: "12px",
+      padding: "30px 20px",
+      width: "300px",
+      textAlign: "center",
+      boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.3)",
+      position: "relative",
+    },
+    closeButton: {
+      position: "absolute",
+      top: "10px",
+      right: "10px",
+      background: "none",
+      border: "none",
+      cursor: "pointer",
+      color: "#666",
+    },
+    warningIcon: {
+      color: "#FF9800",
+      fontSize: "48px",
+      marginBottom: "16px",
+    },
+    title: {
+      fontSize: "18px",
+      fontWeight: "600",
+      fontFamily: '"Poppins", sans-serif',
+      color: "#000000",
+      marginBottom: "8px",
+    },
+    message: {
+      fontSize: "14px",
+      fontWeight: "400",
+      fontFamily: '"Poppins", sans-serif',
+      color: "#666666",
+      lineHeight: "1.5",
+      marginBottom: "20px",
+    },
+    buttonContainer: {
+      display: "flex",
+      gap: "10px",
+      justifyContent: "center",
+    },
+    loginButton: {
+      background: "#007AFF",
+      color: "#FFFFFF",
+      border: "none",
+      borderRadius: "8px",
+      padding: "10px 20px",
+      fontSize: "14px",
+      fontWeight: "500",
+      fontFamily: '"Poppins", sans-serif',
+      cursor: "pointer",
+    },
+    cancelButton: {
+      background: "#F5F5F5",
+      color: "#666666",
+      border: "none",
+      borderRadius: "8px",
+      padding: "10px 20px",
+      fontSize: "14px",
+      fontWeight: "500",
+      fontFamily: '"Poppins", sans-serif',
+      cursor: "pointer",
+    },
+  };
+
+  const LoginRequiredPopup = () => (
+    <div style={popupStyles.overlay}>
+      <div style={popupStyles.popup}>
+        <button style={popupStyles.closeButton} onClick={handleClosePopup}>
+          <Close />
+        </button>
+        <Warning style={popupStyles.warningIcon} />
+        <div style={popupStyles.title}>Login Required</div>
+        <div style={popupStyles.message}>
+          You need to login to access this feature. Please login to continue.
+        </div>
+        <div style={popupStyles.buttonContainer}>
+          <button style={popupStyles.loginButton} onClick={handleLoginRedirect}>
+            Login
+          </button>
+          <button style={popupStyles.cancelButton} onClick={handleClosePopup}>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   const MenuItem = ({
     icon,
     text,
@@ -225,7 +352,7 @@ const Settings = () => {
           <MenuItem
             icon={<AccountCircle />}
             text="Account"
-            onClick={() => console.log("Account clicked")}
+            onClick={() => handleProtectedAction(() => navigate("/profile"))}
           />
 
           <MenuItem
@@ -242,7 +369,9 @@ const Settings = () => {
           <MenuItem
             icon={<CardGiftcard />}
             text="Coupons"
-            onClick={() => console.log("Coupons clicked")}
+            onClick={() =>
+              handleProtectedAction(() => console.log("Coupons clicked"))
+            }
           />
 
           <MenuItem
@@ -277,6 +406,9 @@ const Settings = () => {
             onClick={() => window.open("mailto:support@cheapdeals.com")}
           />
         </div>
+
+        {/* Login Required Popup */}
+        {showLoginPopup && <LoginRequiredPopup />}
       </div>
     </MobileFrame>
   );

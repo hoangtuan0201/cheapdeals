@@ -11,6 +11,8 @@ import SignUpForm from "./pages/SignUp/SignUpForm";
 import Home from "./pages/Home/Home";
 import Policy from "./pages/Policy/Policy";
 import Settings from "./pages/Settings/Settings";
+import Profile from "./pages/Profile/Profile";
+import ProtectedRoute from "./components/shared/ProtectedRoute";
 import "./App.css";
 
 function App() {
@@ -25,7 +27,22 @@ function App() {
             <Route path="/signup" element={<SignUpForm />} />
             <Route path="/home" element={<Home />} />
             <Route path="/policy" element={<Policy />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute redirectTo="/home">
+                  <Settings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute redirectTo="/settings">
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
       </Router>
