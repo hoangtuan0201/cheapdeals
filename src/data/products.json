@@ -1,0 +1,187 @@
+{
+  "categories": [
+    {
+      "id": "phones",
+      "name": "PHONES",
+      "active": true
+    },
+    {
+      "id": "tablets",
+      "name": "TABLETS",
+      "active": false
+    },
+    {
+      "id": "broadband",
+      "name": "BROADBAND",
+      "active": false
+    },
+    {
+      "id": "laptop",
+      "name": "LAPTOP",
+      "active": false
+    },
+    {
+      "id": "pc-gaming",
+      "name": "PC / GAMING",
+      "active": false
+    }
+  ],
+  "featuredItems": [
+    {
+      "id": "samsung-galaxy-a06",
+      "name": "Samsung Galaxy A06",
+      "subtitle": "4GB/64GB",
+      "currentPrice": 150,
+      "originalPrice": 280,
+      "rating": 4.8,
+      "soldCount": 592,
+      "image": "/images/samsung-galaxy-a06.jpg",
+      "category": "phones",
+      "featured": true
+    },
+    {
+      "id": "ipad-air-6",
+      "name": "iPad Air 6 M2 11 inch",
+      "subtitle": "WiFi 1TB",
+      "currentPrice": 400,
+      "originalPrice": 650,
+      "rating": 4.9,
+      "soldCount": 234,
+      "image": "/images/ipad-air-6.jpg",
+      "category": "tablets",
+      "featured": true
+    }
+  ],
+  "products": [
+    {
+      "id": "samsung-galaxy-a06",
+      "name": "Samsung Galaxy A06",
+      "subtitle": "4GB/64GB",
+      "currentPrice": 150,
+      "originalPrice": 280,
+      "rating": 4.8,
+      "soldCount": 592,
+      "image": "/images/samsung-galaxy-a06.jpg",
+      "category": "tablets",
+      "featured": true,
+      "description": "Latest Samsung Galaxy A06 with 4GB RAM and 64GB storage. Perfect for everyday use with excellent battery life."
+    },
+    {
+      "id": "ipad-air-6",
+      "name": "iPad Air 6 M2 11 inch",
+      "subtitle": "WiFi 1TB",
+      "currentPrice": 400,
+      "originalPrice": 650,
+      "rating": 4.9,
+      "soldCount": 234,
+      "image": "/images/ipad-air-6.jpg",
+      "category": "tablets",
+      "featured": true,
+      "description": "Powerful iPad Air with M2 chip and 1TB storage. Ideal for creative professionals and power users."
+    },
+    {
+      "id": "macbook-pro-14",
+      "name": "MacBook Pro 14-inch",
+      "subtitle": "M3 Pro, 18GB, 512GB",
+      "currentPrice": 1200,
+      "originalPrice": 1500,
+      "rating": 4.7,
+      "soldCount": 89,
+      "image": "/images/macbook-pro-14.jpg",
+      "category": "laptop",
+      "featured": false,
+      "description": "Professional laptop with M3 Pro chip, perfect for developers and content creators."
+    },
+    {
+      "id": "dell-xps-13",
+      "name": "Dell XPS 13",
+      "subtitle": "Intel i7, 16GB, 1TB SSD",
+      "currentPrice": 800,
+      "originalPrice": 1100,
+      "rating": 4.6,
+      "soldCount": 156,
+      "image": "/images/dell-xps-13.jpg",
+      "category": "laptop",
+      "featured": false,
+      "description": "Ultra-portable laptop with premium build quality and excellent performance."
+    },
+    {
+      "id": "gaming-pc-rtx4070",
+      "name": "Gaming PC RTX 4070",
+      "subtitle": "Intel i7, 32GB, RTX 4070",
+      "currentPrice": 1800,
+      "originalPrice": 2200,
+      "rating": 4.8,
+      "soldCount": 67,
+      "image": "/images/gaming-pc-rtx4070.jpg",
+      "category": "pc-gaming",
+      "featured": false,
+      "description": "High-performance gaming PC with RTX 4070 graphics card for 4K gaming."
+    },
+    {
+      "id": "asus-rog-laptop",
+      "name": "ASUS ROG Strix G15",
+      "subtitle": "AMD Ryzen 7, RTX 3070",
+      "currentPrice": 1000,
+      "originalPrice": 1300,
+      "rating": 4.5,
+      "soldCount": 123,
+      "image": "/images/asus-rog-laptop.jpg",
+      "category": "pc-gaming",
+      "featured": false,
+      "description": "Gaming laptop with powerful AMD processor and RTX 3070 graphics."
+    },
+    {
+      "id": "fiber-broadband-1gb",
+      "name": "Fiber Broadband 1GB",
+      "subtitle": "Unlimited Data",
+      "currentPrice": 45,
+      "originalPrice": 60,
+      "rating": 4.4,
+      "soldCount": 890,
+      "image": "/images/fiber-broadband.jpg",
+      "category": "broadband",
+      "featured": false,
+      "description": "Ultra-fast fiber broadband with 1GB speed and unlimited data."
+    },
+    {
+      "id": "5g-mobile-broadband",
+      "name": "5G Mobile Broadband",
+      "subtitle": "100GB Data",
+      "currentPrice": 35,
+      "originalPrice": 50,
+      "rating": 4.2,
+      "soldCount": 445,
+      "image": "/images/5g-broadband.jpg",
+      "category": "broadband",
+      "featured": false,
+      "description": "High-speed 5G mobile broadband with 100GB monthly data allowance."
+    },
+    {
+      "id": "samsung-tab-s9",
+      "name": "Samsung Galaxy Tab S9",
+      "subtitle": "11 inch, 256GB",
+      "currentPrice": 320,
+      "originalPrice": 450,
+      "rating": 4.6,
+      "soldCount": 178,
+      "image": "/images/samsung-tab-s9.jpg",
+      "category": "tablets",
+      "featured": false,
+      "description": "Premium Android tablet with S Pen included and excellent display quality."
+    },
+    {
+      "id": "lenovo-thinkpad-x1",
+      "name": "Lenovo ThinkPad X1 Carbon",
+      "subtitle": "Intel i7, 16GB, 512GB",
+      "currentPrice": 950,
+      "originalPrice": 1200,
+      "rating": 4.7,
+      "soldCount": 234,
+      "image": "/images/lenovo-thinkpad-x1.jpg",
+      "category": "laptop",
+      "featured": false,
+      "description": "Business laptop with legendary ThinkPad durability and performance."
+    }
+  ]
+}

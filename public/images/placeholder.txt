@@ -1,0 +1,24 @@
+# Product Images Placeholder
+
+This directory contains product images for the CheapDeals application.
+
+## Required Images:
+- samsung-galaxy-a06.jpg
+- ipad-air-6.jpg
+- macbook-pro-14.jpg
+- dell-xps-13.jpg
+- gaming-pc-rtx4070.jpg
+- asus-rog-laptop.jpg
+- fiber-broadband.jpg
+- 5g-broadband.jpg
+- samsung-tab-s9.jpg
+- lenovo-thinkpad-x1.jpg
+
+## Image Requirements:
+- Format: JPG or PNG
+- Recommended size: 300x300px minimum
+- Aspect ratio: 1:1 (square) preferred
+- File size: Under 500KB for optimal loading
+
+## Fallback:
+If images are not available, the ProductCard component will show a "No Image" placeholder.

@@ -26,10 +26,6 @@ const MobileFrame = ({ children }) => {
     mobileFrame: {
       width: "375px",
       height: "812px",
-      backgroundImage: 'url("/background.png")',
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
       position: "relative",
       display: "flex",
       flexDirection: "column",
@@ -40,12 +36,11 @@ const MobileFrame = ({ children }) => {
     },
     statusBar: {
       height: "24px",
-      background: "transparent",
+      background: "black",
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
       padding: "0 14px",
-      color: "#000",
       fontFamily:
         '"SF Pro Rounded", -apple-system, BlinkMacSystemFont, sans-serif',
       fontSize: "13px",
@@ -55,16 +50,20 @@ const MobileFrame = ({ children }) => {
     },
     time: {
       opacity: 0.9,
+      color: "#fff",       // ✅ sửa đúng mã màu
     },
+
     statusIcons: {
       display: "flex",
       gap: "4px",
       alignItems: "center",
+      color:"fff"
+
     },
     statusIcon: {
       width: "14px",
       height: "14px",
-      color: "#000",
+      color:"fff",
       opacity: 0.9,
     },
     mobileContent: {
