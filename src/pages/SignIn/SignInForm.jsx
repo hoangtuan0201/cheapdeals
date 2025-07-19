@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Checkbox, FormControlLabel, Alert } from "@mui/material";
 import MobileFrame from "../../components/shared/MobileFrame";
@@ -6,6 +6,7 @@ import Logo from "../../components/shared/Logo";
 import FormInput from "../../components/shared/FormInput";
 import Button from "../../components/shared/Button";
 import SocialLoginButton from "../../components/shared/SocialLoginButton";
+import LoadingSpinner from "../../components/shared/LoadingSpinner";
 import {
   GoogleIcon,
   FacebookIcon,
@@ -25,6 +26,18 @@ const SignInForm = () => {
   const [loading, setLoading] = useState(false);
   const [localError, setLocalError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
+
+  // Auto-clear local error after 3 seconds
+  useEffect(() => {
+    if (localError) {
+      const timer = setTimeout(() => {
+        setLocalError("");
+      }, 3000); // 3 seconds
+
+      // Cleanup timer if error changes or component unmounts
+      return () => clearTimeout(timer);
+    }
+  }, [localError]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -137,6 +150,15 @@ const SignInForm = () => {
 
   return (
     <MobileFrame>
+      {/* Loading Overlay */}
+      {loading && (
+        <LoadingSpinner
+          fullScreen={true}
+          message="Signing you in..."
+          size={50}
+        />
+      )}
+
       <div
         style={{
           display: "flex",
@@ -300,9 +322,26 @@ const SignInForm = () => {
             className="btn-auth"
             disabled={loading}
           >
-            {loading ? "Signing In..." : "Sign In"}
+            Sign In
           </Button>
-
+          {/* Continue as Guest Button */}
+          <Button
+            type="button"
+            variant="secondary"
+            className="btn-auth"
+            onClick={handleContinueAsGuest}
+            disabled={loading}
+            style={{
+              marginTop: "10px",
+              background: "rgba(255, 255, 255, 0.4)",
+              border: "0.5px solid rgba(217, 217, 217, 0.6)",
+              opacity: 0.8,
+              maxWidth: "320px",
+              width: "100%",
+            }}
+          >
+            Continue as Guest
+          </Button>
           {/* Or sign in with text */}
           <p
             style={{
@@ -351,25 +390,6 @@ const SignInForm = () => {
           </div>
         </form>
 
-        {/* Continue as Guest Button */}
-        <Button
-          type="button"
-          variant="secondary"
-          className="btn-auth"
-          onClick={handleContinueAsGuest}
-          disabled={loading}
-          style={{
-            marginTop: "10px",
-            background: "rgba(255, 255, 255, 0.4)",
-            border: "0.5px solid rgba(217, 217, 217, 0.6)",
-            opacity: 0.8,
-            maxWidth: "320px",
-            width: "100%",
-          }}
-        >
-          Continue as Guest
-        </Button>
-
         {/* Terms and Privacy */}
         <div
           style={{
@@ -394,6 +414,7 @@ const SignInForm = () => {
           >
             By clicking on "Sign In" you agree to{" "}
             <span
+              onClick={() => navigate("/policy")}
               style={{
                 textDecoration: "underline",
                 cursor: "pointer",
@@ -404,6 +425,7 @@ const SignInForm = () => {
             </span>
             {" | "}
             <span
+              onClick={() => navigate("/policy")}
               style={{
                 textDecoration: "underline",
                 cursor: "pointer",

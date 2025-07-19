@@ -34,9 +34,40 @@ export const signUpWithEmail = async (email, password, fullName) => {
       },
     };
   } catch (error) {
+    console.error("Sign up error:", error);
+
+    // Handle specific Firebase error codes
+    let errorMessage = "An error occurred during sign up";
+
+    switch (error.code) {
+      case "auth/email-already-in-use":
+        errorMessage =
+          "This email address is already registered. Please use a different email or try signing in.";
+        break;
+      case "auth/weak-password":
+        errorMessage =
+          "Password is too weak. Please choose a stronger password.";
+        break;
+      case "auth/invalid-email":
+        errorMessage = "Please enter a valid email address.";
+        break;
+      case "auth/operation-not-allowed":
+        errorMessage =
+          "Email/password accounts are not enabled. Please contact support.";
+        break;
+      case "auth/network-request-failed":
+        errorMessage =
+          "Network error. Please check your internet connection and try again.";
+        break;
+      default:
+        errorMessage =
+          error.message || "An unexpected error occurred during sign up";
+        break;
+    }
+
     return {
       success: false,
-      error: error.message,
+      error: errorMessage,
     };
   }
 };
@@ -60,9 +91,42 @@ export const signInWithEmail = async (email, password) => {
       },
     };
   } catch (error) {
+    console.error("Sign in error:", error);
+
+    // Handle specific Firebase error codes
+    let errorMessage = "An error occurred during sign in";
+
+    switch (error.code) {
+      case "auth/user-not-found":
+        errorMessage =
+          "No account found with this email address. Please check your email or sign up.";
+        break;
+      case "auth/wrong-password":
+        errorMessage = "Incorrect password. Please try again.";
+        break;
+      case "auth/invalid-email":
+        errorMessage = "Please enter a valid email address.";
+        break;
+      case "auth/user-disabled":
+        errorMessage =
+          "This account has been disabled. Please contact support.";
+        break;
+      case "auth/too-many-requests":
+        errorMessage = "Too many failed attempts. Please try again later.";
+        break;
+      case "auth/network-request-failed":
+        errorMessage =
+          "Network error. Please check your internet connection and try again.";
+        break;
+      default:
+        errorMessage =
+          error.message || "An unexpected error occurred during sign in";
+        break;
+    }
+
     return {
       success: false,
-      error: error.message,
+      error: errorMessage,
     };
   }
 };

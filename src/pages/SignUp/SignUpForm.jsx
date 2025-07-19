@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Alert } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
 import MobileFrame from "../../components/shared/MobileFrame";
 import Logo from "../../components/shared/Logo";
 import FormInput from "../../components/shared/FormInput";
 import Button from "../../components/shared/Button";
 import SocialLoginButton from "../../components/shared/SocialLoginButton";
+import LoadingSpinner from "../../components/shared/LoadingSpinner";
+import AutoClearAlert from "../../components/shared/AutoClearAlert";
 import {
   GoogleIcon,
   FacebookIcon,
@@ -26,6 +27,18 @@ const SignUpForm = () => {
   const [loading, setLoading] = useState(false);
   const [localError, setLocalError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
+
+  // Auto-clear local error after 3 seconds
+  useEffect(() => {
+    if (localError) {
+      const timer = setTimeout(() => {
+        setLocalError("");
+      }, 3000); // 3 seconds
+
+      // Cleanup timer if error changes or component unmounts
+      return () => clearTimeout(timer);
+    }
+  }, [localError]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -144,6 +157,15 @@ const SignUpForm = () => {
 
   return (
     <MobileFrame>
+      {/* Loading Overlay */}
+      {loading && (
+        <LoadingSpinner
+          fullScreen={true}
+          message="Creating your account..."
+          size={50}
+        />
+      )}
+
       <div
         style={{
           display: "flex",
@@ -158,19 +180,17 @@ const SignUpForm = () => {
       >
         <Logo size="small" />
 
-        {(error || localError) && (
-          <Alert
-            severity="error"
-            sx={{
-              width: "100%",
-              maxWidth: "320px",
-              margin: "20px 0 10px 0",
-              fontFamily: '"Poppins", sans-serif',
-            }}
-          >
-            {localError || error}
-          </Alert>
-        )}
+        <AutoClearAlert
+          message={localError || error}
+          severity="error"
+          duration={3000}
+          onClear={() => {
+            if (localError) setLocalError("");
+          }}
+          style={{
+            margin: "20px 0 10px 0",
+          }}
+        />
 
         <form
           onSubmit={handleSubmit}
@@ -207,86 +227,144 @@ const SignUpForm = () => {
             )}
           </div>
 
-          <FormInput
-            label="Email"
-            type="email"
-            placeholder="Please enter your email"
-            value={formData.email}
-            onChange={(e) =>
-              handleInputChange({
-                target: { name: "email", value: e.target.value },
-              })
-            }
-            required
-          />
+          <div>
+            <FormInput
+              label="Email"
+              type="email"
+              placeholder="Please enter your email"
+              value={formData.email}
+              onChange={(e) =>
+                handleInputChange({
+                  target: { name: "email", value: e.target.value },
+                })
+              }
+              required
+            />
+            {fieldErrors.email && (
+              <p
+                style={{
+                  color: "#f44336",
+                  fontSize: "12px",
+                  margin: "5px 0 0 3px",
+                  fontFamily: '"Poppins", sans-serif',
+                }}
+              >
+                {fieldErrors.email}
+              </p>
+            )}
+          </div>
 
-          <FormInput
-            label="Password"
-            type="password"
-            placeholder="Please enter your password"
-            value={formData.password}
-            onChange={(e) =>
-              handleInputChange({
-                target: { name: "password", value: e.target.value },
-              })
-            }
-            showPasswordToggle={true}
-            required
-          />
+          <div>
+            <FormInput
+              label="Password"
+              type="password"
+              placeholder="Please enter your password"
+              value={formData.password}
+              onChange={(e) =>
+                handleInputChange({
+                  target: { name: "password", value: e.target.value },
+                })
+              }
+              showPasswordToggle={true}
+              required
+            />
+            {fieldErrors.password && (
+              <p
+                style={{
+                  color: "#f44336",
+                  fontSize: "12px",
+                  margin: "5px 0 0 3px",
+                  fontFamily: '"Poppins", sans-serif',
+                }}
+              >
+                {fieldErrors.password}
+              </p>
+            )}
+          </div>
 
-          <FormInput
-            label="Re-enter password"
-            type="password"
-            placeholder="Please re-enter your password"
-            value={formData.confirmPassword}
-            onChange={(e) =>
-              handleInputChange({
-                target: { name: "confirmPassword", value: e.target.value },
-              })
-            }
-            showPasswordToggle={true}
-            required
-          />
-            <p
-          style={{
-            fontFamily: '"Poppins", sans-serif',
-            fontWeight: 400,
-            fontSize: "13px",
-            lineHeight: "1.5em",
-            color: "#000",
-            textAlign: "center",
-            margin: "5px 0",
-            opacity: 0.6,
-          }}
-        >
-          Already have an account?{" "}
-          <button
-            type="button"
-            onClick={handleSwitchToSignIn}
+          <div>
+            <FormInput
+              label="Re-enter password"
+              type="password"
+              placeholder="Please re-enter your password"
+              value={formData.confirmPassword}
+              onChange={(e) =>
+                handleInputChange({
+                  target: { name: "confirmPassword", value: e.target.value },
+                })
+              }
+              showPasswordToggle={true}
+              required
+            />
+            {fieldErrors.confirmPassword && (
+              <p
+                style={{
+                  color: "#f44336",
+                  fontSize: "12px",
+                  margin: "5px 0 0 3px",
+                  fontFamily: '"Poppins", sans-serif',
+                }}
+              >
+                {fieldErrors.confirmPassword}
+              </p>
+            )}
+          </div>
+          <p
             style={{
-              background: "none",
-              border: "none",
-              color: "#000",
               fontFamily: '"Poppins", sans-serif',
               fontWeight: 400,
               fontSize: "13px",
               lineHeight: "1.5em",
-              cursor: "pointer",
-              textDecoration: "underline",
-              padding: 0,
-              marginLeft: "4px",
+              color: "#000",
+              textAlign: "center",
+              margin: "5px 0",
+              opacity: 0.6,
             }}
           >
-            Sign In
-          </button>
-        </p>
+            Already have an account?{" "}
+            <button
+              type="button"
+              onClick={handleSwitchToSignIn}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#000",
+                fontFamily: '"Poppins", sans-serif',
+                fontWeight: 400,
+                fontSize: "13px",
+                lineHeight: "1.5em",
+                cursor: "pointer",
+                textDecoration: "underline",
+                padding: 0,
+                marginLeft: "4px",
+              }}
+            >
+              Sign In
+            </button>
+          </p>
           <Button
             type="submit"
             variant="primary"
             className="btn-auth"
             disabled={loading}
           >
-            {loading ? "Creating Account..." : "Create Account"}
+            Create Account
+          </Button>
+
+          <Button
+            type="button"
+            variant="secondary"
+            className="btn-auth"
+            onClick={handleContinueAsGuest}
+            disabled={loading}
+            style={{
+              marginTop: "10px",
+              background: "rgba(255, 255, 255, 0.4)",
+              border: "0.5px solid rgba(217, 217, 217, 0.6)",
+              opacity: 0.8,
+            }}
+          >
+            Continue as Guest
           </Button>
 
           {/* Or sign up with text */}
@@ -335,25 +413,7 @@ const SignUpForm = () => {
               style={{ flex: 1, maxWidth: "80px" }}
             />
           </div>
-
-          <Button
-            type="button"
-            variant="secondary"
-            className="btn-auth"
-            onClick={handleContinueAsGuest}
-            disabled={loading}
-            style={{
-              marginTop: "10px",
-              background: "rgba(255, 255, 255, 0.4)",
-              border: "0.5px solid rgba(217, 217, 217, 0.6)",
-              opacity: 0.8,
-            }}
-          >
-            Continue as Guest
-          </Button>
         </form>
-
-      
       </div>
     </MobileFrame>
   );

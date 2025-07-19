@@ -5,9 +5,8 @@ import {
   BatteryFull,
   Home,
   ChevronLeft,
-  RadioButtonUnchecked,
 } from "@mui/icons-material";
-
+import SquareIcon from '@mui/icons-material/Square';
 const MobileFrame = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -96,7 +95,7 @@ const MobileFrame = ({ children }) => {
       color: "fff",
     },
     navRecent: {
-      width: "20px",
+      width: "17px",
       height: "20px",
       color: "fff",
     },
@@ -136,7 +135,7 @@ const MobileFrame = ({ children }) => {
           style={{ ...styles.navHome, cursor: "pointer" }}
           onClick={handleHomeClick}
         />
-        <RadioButtonUnchecked style={styles.navRecent} />
+        <SquareIcon style={styles.navRecent} />
       </div>
     </div>
   );

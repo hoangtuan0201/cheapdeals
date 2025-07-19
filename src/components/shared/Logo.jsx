@@ -9,8 +9,6 @@ const Logo = ({ size = "large" }) => {
       textAlign: "center",
       position: "relative",
       zIndex: 2,
-      marginTop: isLarge ? "10px" : "10px",
-      marginBottom: isLarge ? "10px" : "10px",
     },
     logoBackground: {
       position: "relative",

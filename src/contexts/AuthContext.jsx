@@ -1,13 +1,12 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import { 
-  signUpWithEmail, 
-  signInWithEmail, 
-  signInWithGoogle, 
-  signOutUser, 
-  resetPassword, 
-  getCurrentUser,
-  onAuthStateChange
-} from '../services/authService';
+import { createContext, useContext, useState, useEffect } from "react";
+import {
+  signUpWithEmail,
+  signInWithEmail,
+  signInWithGoogle,
+  signOutUser,
+  resetPassword,
+  onAuthStateChange,
+} from "../services/authService";
 
 // Create the auth context
 const AuthContext = createContext();
@@ -22,6 +21,18 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Auto-clear error after 3 seconds
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(null);
+      }, 3000); // 3 seconds
+
+      // Cleanup timer if error changes or component unmounts
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   // Sign up function
   const signup = async (email, password, displayName) => {
@@ -82,7 +93,7 @@ export const AuthProvider = ({ children }) => {
           email: user.email,
           displayName: user.displayName,
           photoURL: user.photoURL,
-          emailVerified: user.emailVerified
+          emailVerified: user.emailVerified,
         });
       } else {
         setCurrentUser(null);
@@ -103,7 +114,7 @@ export const AuthProvider = ({ children }) => {
     login,
     loginWithGoogle,
     logout,
-    forgotPassword
+    forgotPassword,
   };
 
   return (
