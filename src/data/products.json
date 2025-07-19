@@ -35,7 +35,7 @@
       "originalPrice": 280,
       "rating": 4.8,
       "soldCount": 592,
-      "image": "/images/samsung-galaxy-a06.jpg",
+      "image": "/images/products/samsung-galaxy-a06.png",
       "category": "phones",
       "featured": true
     },
@@ -47,8 +47,32 @@
       "originalPrice": 650,
       "rating": 4.9,
       "soldCount": 234,
-      "image": "/images/ipad-air-6.jpg",
+      "image": "/images/products/ipad-air-6.png",
       "category": "tablets",
+      "featured": true
+    },
+    {
+      "id": "laptop-dell-inspiron-14",
+      "name": "Laptop Dell Inspiron 14 5440",
+      "subtitle": "Core 5 120U 16GB/512GB/2GB",
+      "currentPrice": 500,
+      "originalPrice": 750,
+      "rating": 4.7,
+      "soldCount": 789,
+      "image": "/images/products/laptop-dell-inspiron.png",
+      "category": "laptop",
+      "featured": true
+    },
+    {
+      "id": "broadband-package",
+      "name": "BroadBand Package",
+      "subtitle": "High-Speed Internet",
+      "currentPrice": 100,
+      "originalPrice": 150,
+      "rating": 4.9,
+      "soldCount": 331,
+      "image": "/images/products/broadband-package-44c9b7.png",
+      "category": "broadband",
       "featured": true
     }
   ],
@@ -61,8 +85,8 @@
       "originalPrice": 280,
       "rating": 4.8,
       "soldCount": 592,
-      "image": "/images/samsung-galaxy-a06.jpg",
-      "category": "tablets",
+      "image": "/images/products/samsung-galaxy-a06.png",
+      "category": "phones",
       "featured": true,
       "description": "Latest Samsung Galaxy A06 with 4GB RAM and 64GB storage. Perfect for everyday use with excellent battery life."
     },
@@ -74,10 +98,23 @@
       "originalPrice": 650,
       "rating": 4.9,
       "soldCount": 234,
-      "image": "/images/ipad-air-6.jpg",
+      "image": "/images/products/ipad-air-6.png",
       "category": "tablets",
       "featured": true,
       "description": "Powerful iPad Air with M2 chip and 1TB storage. Ideal for creative professionals and power users."
+    },
+    {
+      "id": "laptop-dell-inspiron-14",
+      "name": "Laptop Dell Inspiron 14 5440",
+      "subtitle": "Core 5 120U 16GB/512GB/2GB",
+      "currentPrice": 500,
+      "originalPrice": 750,
+      "rating": 4.7,
+      "soldCount": 789,
+      "image": "/images/products/laptop-dell-inspiron.png",
+      "category": "laptop",
+      "featured": true,
+      "description": "Powerful Dell Inspiron laptop with Intel Core 5 processor, perfect for work and entertainment."
     },
     {
       "id": "macbook-pro-14",
@@ -130,6 +167,19 @@
       "category": "pc-gaming",
       "featured": false,
       "description": "Gaming laptop with powerful AMD processor and RTX 3070 graphics."
+    },
+    {
+      "id": "broadband-package",
+      "name": "BroadBand Package",
+      "subtitle": "High-Speed Internet",
+      "currentPrice": 100,
+      "originalPrice": 150,
+      "rating": 4.9,
+      "soldCount": 331,
+      "image": "/images/products/broadband-package-44c9b7.png",
+      "category": "broadband",
+      "featured": true,
+      "description": "Premium broadband package with high-speed internet and unlimited data."
     },
     {
       "id": "fiber-broadband-1gb",
