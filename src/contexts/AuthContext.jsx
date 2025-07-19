@@ -3,6 +3,7 @@ import {
   signUpWithEmail,
   signInWithEmail,
   signInWithGoogle,
+  signInWithFacebook,
   signOutUser,
   resetPassword,
   onAuthStateChange,
@@ -64,6 +65,16 @@ export const AuthProvider = ({ children }) => {
     return result;
   };
 
+  // Facebook sign in function
+  const loginWithFacebook = async () => {
+    setError(null);
+    const result = await signInWithFacebook();
+    if (!result.success) {
+      setError(result.error);
+    }
+    return result;
+  };
+
   // Sign out function
   const logout = async () => {
     setError(null);
@@ -113,6 +124,7 @@ export const AuthProvider = ({ children }) => {
     signup,
     login,
     loginWithGoogle,
+    loginWithFacebook,
     logout,
     forgotPassword,
   };

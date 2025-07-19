@@ -3,6 +3,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
+  FacebookAuthProvider,
   signOut,
   updateProfile,
   sendPasswordResetEmail,
@@ -174,9 +175,99 @@ export const signInWithGoogle = async () => {
       },
     };
   } catch (error) {
+    console.error("Google sign in error:", error);
+
+    // Handle specific Firebase error codes
+    let errorMessage = "An error occurred during Google sign in";
+
+    switch (error.code) {
+      case "auth/popup-closed-by-user":
+        errorMessage = "Sign in was cancelled. Please try again.";
+        break;
+      case "auth/popup-blocked":
+        errorMessage =
+          "Popup was blocked by your browser. Please allow popups and try again.";
+        break;
+      case "auth/network-request-failed":
+        errorMessage =
+          "Network error. Please check your internet connection and try again.";
+        break;
+      case "auth/account-exists-with-different-credential":
+        errorMessage =
+          "An account already exists with the same email address but different sign-in credentials.";
+        break;
+      default:
+        errorMessage =
+          error.message || "An unexpected error occurred during Google sign in";
+        break;
+    }
+
     return {
       success: false,
-      error: error.message,
+      error: errorMessage,
+    };
+  }
+};
+
+// Sign in with Facebook
+export const signInWithFacebook = async () => {
+  try {
+    const provider = new FacebookAuthProvider();
+    // Request additional permissions
+    provider.addScope("email");
+    provider.addScope("public_profile");
+
+    const userCredential = await signInWithPopup(auth, provider);
+    const user = userCredential.user;
+
+    return {
+      success: true,
+      user: {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      },
+    };
+  } catch (error) {
+    console.error("Facebook sign in error:", error);
+
+    // Handle specific Firebase error codes
+    let errorMessage = "An error occurred during Facebook sign in";
+
+    switch (error.code) {
+      case "auth/popup-closed-by-user":
+        errorMessage = "Sign in was cancelled. Please try again.";
+        break;
+      case "auth/popup-blocked":
+        errorMessage =
+          "Popup was blocked by your browser. Please allow popups and try again.";
+        break;
+      case "auth/network-request-failed":
+        errorMessage =
+          "Network error. Please check your internet connection and try again.";
+        break;
+      case "auth/account-exists-with-different-credential":
+        errorMessage =
+          "An account already exists with the same email address but different sign-in credentials. Please try signing in with your original method.";
+        break;
+      case "auth/auth-domain-config-required":
+        errorMessage =
+          "Facebook authentication is not properly configured. Please contact support.";
+        break;
+      case "auth/cancelled-popup-request":
+        errorMessage = "Only one popup request is allowed at one time.";
+        break;
+      default:
+        errorMessage =
+          error.message ||
+          "An unexpected error occurred during Facebook sign in";
+        break;
+    }
+
+    return {
+      success: false,
+      error: errorMessage,
     };
   }
 };

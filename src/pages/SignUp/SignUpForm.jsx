@@ -17,7 +17,7 @@ import { validateForm } from "../../utils/validation";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
-  const { signup, error } = useAuth();
+  const { signup, loginWithFacebook, error } = useAuth();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -130,8 +130,13 @@ const SignUpForm = () => {
     setLocalError("");
 
     try {
-      // TODO: Implement Facebook sign up
-      console.log("Facebook sign up clicked");
+      const result = await loginWithFacebook();
+      if (result.success) {
+        console.log("Facebook sign up successful:", result.user);
+        navigate("/home");
+      } else {
+        setLocalError(result.error || "Facebook sign up failed");
+      }
     } catch (err) {
       setLocalError("An unexpected error occurred");
       console.error("Facebook sign up error:", err);

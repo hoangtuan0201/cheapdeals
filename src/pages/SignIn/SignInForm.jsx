@@ -17,7 +17,7 @@ import { validateEmail, validatePassword } from "../../utils/validation";
 
 const SignInForm = () => {
   const navigate = useNavigate();
-  const { login, loginWithGoogle, error } = useAuth();
+  const { login, loginWithGoogle, loginWithFacebook, error } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -123,8 +123,13 @@ const SignInForm = () => {
     setLocalError("");
 
     try {
-      // TODO: Implement Facebook sign in
-      console.log("Facebook sign in clicked");
+      const result = await loginWithFacebook();
+      if (result.success) {
+        console.log("Facebook sign in successful:", result.user);
+        navigate("/home");
+      } else {
+        setLocalError(result.error || "Facebook sign in failed");
+      }
     } catch (err) {
       setLocalError("An unexpected error occurred");
       console.error("Facebook sign in error:", err);
